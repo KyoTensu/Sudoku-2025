@@ -6,32 +6,86 @@ public class GraphProba : ISudokuSolver
 {
     public SudokuGrid Solve(SudokuGrid s)
     {
-        SolveSudoku(s);
+        // Step 1: Initialize a probability graph
+        var probabilities = InitializeProbabilities(s);
+
+        // Step 2: Solve using probability updates
+        while (!IsSolved(s))
+        {
+            // Find the most probable value for each cell
+            UpdateProbabilities(s, probabilities);
+
+            // Fill cells with certain probabilities
+            FillCertainValues(s, probabilities);
+        }
+
         return s;
     }
 
-    private bool SolveSudoku(SudokuGrid grid)
+    // Initializes probabilities for each cell (1-9 for empty cells)
+    private Dictionary<(int row, int col), List<int>> InitializeProbabilities(SudokuGrid s)
+    {
+        var probabilities = new Dictionary<(int, int), List<int>>();
+
+        for (int row = 0; row < 9; row++)
+        {
+            for (int col = 0; col < 9; col++)
+            {
+                if (s.Cells[row][col] == 0)
+                {
+                    // All numbers 1-9 are initially possible
+                    probabilities[(row, col)] = Enumerable.Range(1, 9).ToList();
+                }
+            }
+        }
+
+        return probabilities;
+    }
+
+    // Updates probabilities based on current grid state
+    private void UpdateProbabilities(SudokuGrid s, Dictionary<(int, int), List<int>> probabilities)
+    {
+        foreach (var cell in probabilities.Keys.ToList())
+        {
+            var (row, col) = cell;
+            var possibleValues = probabilities[cell];
+
+            // Remove numbers already in the row, column, or 3x3 box
+            possibleValues.RemoveAll(n => IsInRow(s, row, n) || IsInCol(s, col, n) || IsInBox(s, row, col, n));
+
+            // Update probabilities
+            probabilities[cell] = possibleValues;
+        }
+    }
+
+    // Fills cells that have only one possible value
+    private void FillCertainValues(SudokuGrid s, Dictionary<(int, int), List<int>> probabilities)
+    {
+        foreach (var cell in probabilities.Keys.ToList())
+        {
+            var (row, col) = cell;
+            var possibleValues = probabilities[cell];
+
+            if (possibleValues.Count == 1)
+            {
+                // Assign the value to the grid
+                s.Cells[row][col] = possibleValues[0];
+
+                // Remove the cell from probabilities
+                probabilities.Remove(cell);
+            }
+        }
+    }
+
+    // Checks if the Sudoku grid is solved
+    private bool IsSolved(SudokuGrid s)
     {
         for (int row = 0; row < 9; row++)
         {
             for (int col = 0; col < 9; col++)
             {
-                if (grid.Cells[row][col] == 0)
+                if (s.Cells[row][col] == 0)
                 {
-                    for (int num = 1; num <= 9; num++)
-                    {
-                        if (IsSafe(grid, row, col, num))
-                        {
-                            grid.Cells[row][col] = num;
-
-                            if (SolveSudoku(grid))
-                            {
-                                return true;
-                            }
-
-                            grid.Cells[row][col] = 0;
-                        }
-                    }
                     return false;
                 }
             }
@@ -39,28 +93,33 @@ public class GraphProba : ISudokuSolver
         return true;
     }
 
-    private bool IsSafe(SudokuGrid grid, int row, int col, int num)
+    // Helper functions to check the presence of a number in row, column, or box
+    private bool IsInRow(SudokuGrid s, int row, int num)
     {
-        for (int x = 0; x < 9; x++)
-        {
-            if (grid.Cells[row][x] == num || grid.Cells[x][col] == num)
-            {
-                return false;
-            }
-        }
+        return s.Cells[row].Contains(num);
+    }
 
-        int startRow = row - row % 3, startCol = col - col % 3;
+    private bool IsInCol(SudokuGrid s, int col, int num)
+    {
+        return s.Cells.Any(row => row[col] == num);
+    }
+
+    private bool IsInBox(SudokuGrid s, int row, int col, int num)
+    {
+        int boxRowStart = (row / 3) * 3;
+        int boxColStart = (col / 3) * 3;
+
         for (int i = 0; i < 3; i++)
         {
             for (int j = 0; j < 3; j++)
             {
-                if (grid.Cells[i + startRow][j + startCol] == num)
+                if (s.Cells[boxRowStart + i][boxColStart + j] == num)
                 {
-                    return false;
+                    return true;
                 }
             }
         }
 
-        return true;
+        return false;
     }
 }
