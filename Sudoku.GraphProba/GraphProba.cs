@@ -19,14 +19,25 @@ public class GraphProba : ISudokuSolver
     }
 }
 
-    /// <summary>
-    /// Ce deuxième modèle n'apporte pas encore tout à fait satisfaction mais apporte un réel progrès vis à vis du modèle naïf. J'ai rajouté des commentaires là où de nouveaux tests peuvent être entrepris.
-    /// le moteur d'inférence n'a plus qu'à compiler le modèle une seule fois, et il résout d'autres Sudokus faciles.
-    /// Il manque cependant de résoudre les Sudokus plus difficiles. Ceci dit, il trouve la bonne valeur pour une majorité de cellules,
-    /// et du coup on peut envisager de l'utiliser de façon itérative en ne conservant que les valeurs pour lesquelles les probabilités sont les meilleures et en réinjectant dans CellsPrior.ObservedValue comme dans l'exemple Cyclist d'Infer.Net,
-    /// plutôt que d'utiliser cellsPosterior.Point ou cellsProbsPosterior[cellIndex].GetMode() comme c'est le cas actuellement ce qui revient à ignorant les probabilités réelles et conserver toutes les valeurs du premier coup)
-    /// </summary>
-    public class RobustSudokuModel
+public class GraphNaiveProba : ISudokuSolver
+{
+	private static NaiveSudokuModel naiveModel = new NaiveSudokuModel();
+	public SudokuGrid Solve(SudokuGrid s)
+	{
+		//var model = new NaiveSudokuModel();
+		naiveModel.SolveSudoku(s);
+		return s;
+	}
+}
+
+/// <summary>
+/// Ce deuxième modèle n'apporte pas encore tout à fait satisfaction mais apporte un réel progrès vis à vis du modèle naïf. J'ai rajouté des commentaires là où de nouveaux tests peuvent être entrepris.
+/// le moteur d'inférence n'a plus qu'à compiler le modèle une seule fois, et il résout d'autres Sudokus faciles.
+/// Il manque cependant de résoudre les Sudokus plus difficiles. Ceci dit, il trouve la bonne valeur pour une majorité de cellules,
+/// et du coup on peut envisager de l'utiliser de façon itérative en ne conservant que les valeurs pour lesquelles les probabilités sont les meilleures et en réinjectant dans CellsPrior.ObservedValue comme dans l'exemple Cyclist d'Infer.Net,
+/// plutôt que d'utiliser cellsPosterior.Point ou cellsProbsPosterior[cellIndex].GetMode() comme c'est le cas actuellement ce qui revient à ignorant les probabilités réelles et conserver toutes les valeurs du premier coup)
+/// </summary>
+public class RobustSudokuModel
     {
 
 
@@ -265,7 +276,7 @@ public class GraphProba : ISudokuSolver
             //Ajout des contraintes de Sudoku (all diff pour tous les voisinages)
             foreach (var cellIndex in CellIndices)
             {
-                foreach (var neighbourCellIndex in SudokuGrid.AllNeighbours[cellIndex])
+                foreach (var neighbourCellIndex in SudokuGrid.CellNeighbours[cellIndex / 9][cellIndex%9])
                 {
                     if ((neighbourCellIndex.row * 9 + neighbourCellIndex.column) > cellIndex)
                     {

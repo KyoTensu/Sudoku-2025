@@ -226,14 +226,31 @@ namespace Sudoku.Shared
         /// Convertit un tableau NumPy en tableau .NET
         /// </summary>
 		public static int[,] AsManagedArray(PyModule scope, PyObject pyCells)
-		{
-			PyObject asNetArray = scope.Get("asNetArray");
-			PyObject netResult = asNetArray.Invoke(pyCells);
+        {
+            PyObject asNetArray = scope.Get("asNetArray");
+            PyObject netResult = asNetArray.Invoke(pyCells);
 
-			// Convertissez le PyObject résultant en tableau .NET
-			var managedResult = netResult.AsManagedObject(typeof(int[,])) as int[,];
-			return managedResult;
-		}
+            // Convertissez le PyObject résultant en tableau .NET
+            var longArray = netResult.AsManagedObject(typeof(long[,])) as long[,];
+            if (longArray == null)
+            {
+                throw new InvalidCastException("Cannot convert the result to long[,].");
+            }
+
+            int rows = longArray.GetLength(0);
+            int cols = longArray.GetLength(1);
+            int[,] managedResult = new int[rows, cols];
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    managedResult[i, j] = (int)longArray[i, j];
+                }
+            }
+
+            return managedResult;
+        }
 
 
 	}
