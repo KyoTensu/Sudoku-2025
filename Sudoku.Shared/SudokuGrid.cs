@@ -28,7 +28,7 @@ namespace Sudoku.Shared
 
         private static readonly (int row, int column)[][] _BoxNeighbours = GetBoxNeighbours();
 
-        public static readonly (int row, int column)[][] AllNeighbours =
+        public static (int row, int column)[][] AllNeighbours =
             _LineNeighbours.Concat(_ColumnNeighbours).Concat(_BoxNeighbours).ToArray();
 
 
