@@ -15,14 +15,14 @@ namespace Sudoku.Shared
     public static class MacInstaller
     {
 
-        public static string LibFileName { get; set; } = "libpython3.7.dylib";
+        public static string LibFileName { get; set; } = "libpython3.12.dylib";
         public static string InstallPath { get; set; } = "/Library/Frameworks/Python.framework/Versions"; //Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
 
-        public static string PythonDirectoryName { get; set; } = "3.7";// = (string) null;
+        public static string PythonDirectoryName { get; set; } = "3.12";// = (string) null;
 
         public static MacInstaller.InstallationSource Source { get; set; } = (MacInstaller.InstallationSource)new MacInstaller.DownloadInstallationSource()
         {
-            DownloadUrl = "https://www.python.org/ftp/python/3.7.3/python-3.7.3-embed-amd64.zip"
+            DownloadUrl = "https://www.python.org/ftp/python/3.12.7/python-3.12.7-embed-amd64.zip"
         };
 
         public static string InstallPythonHome => !string.IsNullOrWhiteSpace(MacInstaller.PythonDirectoryName) ? Path.Combine(MacInstaller.InstallPath, MacInstaller.PythonDirectoryName) : Path.Combine(MacInstaller.InstallPath, MacInstaller.Source.GetPythonDistributionName());

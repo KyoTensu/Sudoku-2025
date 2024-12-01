@@ -15,4 +15,10 @@
       <PackageReference Include="Microsoft.ML.Probabilistic.Compiler" Version="0.4.2403.801" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="compiledModel\Model_EP.dll">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>

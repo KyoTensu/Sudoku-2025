@@ -16,6 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Puzzles", "Puzzles", "{5351
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sudoku.Backtracking", "Sudoku.Backtracking\Sudoku.Backtracking.csproj", "{1C50AE77-2CE9-4BD8-ADFE-3C3A255FFC78}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sudoku.ResolutionNeuronne", "Sudoku.ResolutionNeuronne\Sudoku.ResolutionNeuronne.csproj", "{E4CE5A9B-C2DC-426A-B87B-2EBB60F118AC}"
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sudoku.simulé", "Sudoku.simulé\Sudoku.simulé.csproj", "{C303483D-4F28-493F-9391-D2A3CDA49E7A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectTestSolver", "ProjectTestSolver\ProjectTestSolver.csproj", "{ABB783F0-4699-4E97-91E5-BD121FC881D1}"
@@ -46,6 +47,10 @@ Global
 		{1C50AE77-2CE9-4BD8-ADFE-3C3A255FFC78}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1C50AE77-2CE9-4BD8-ADFE-3C3A255FFC78}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1C50AE77-2CE9-4BD8-ADFE-3C3A255FFC78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4CE5A9B-C2DC-426A-B87B-2EBB60F118AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4CE5A9B-C2DC-426A-B87B-2EBB60F118AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4CE5A9B-C2DC-426A-B87B-2EBB60F118AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4CE5A9B-C2DC-426A-B87B-2EBB60F118AC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C303483D-4F28-493F-9391-D2A3CDA49E7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C303483D-4F28-493F-9391-D2A3CDA49E7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C303483D-4F28-493F-9391-D2A3CDA49E7A}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -23,7 +23,7 @@ public class GraphProba : ISudokuSolver
 		IGeneratedAlgorithm? compiledModel = null;
 		try
 		{
-			Assembly assembly = Assembly.LoadFrom(@"..\..\..\..\Sudoku.GraphProba\compiledModel\Model_EP.dll");
+			Assembly assembly = Assembly.LoadFrom(@".\compiledModel\Model_EP.dll");
 			Type modelType = assembly.GetTypes().FirstOrDefault(t => typeof(IGeneratedAlgorithm).IsAssignableFrom(t));
 			compiledModel = (IGeneratedAlgorithm)Activator.CreateInstance(modelType);
 		}
