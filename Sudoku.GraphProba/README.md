@@ -93,5 +93,9 @@ SudokuGrid solution = solver.Solve(puzzle);
 
 ## **6. Références**
 - Documentation Infer.NET : [https://dotnet.github.io/infer/InferNet101.pdf](https://dotnet.github.io/infer/InferNet101.pdf)
-- Distribution catégorielle : [Wikipedia](https://fr.wikipedia.org/wiki/Loi_catégorielle)
+- Distribution multinomiale : [Wikipedia](https://en.wikipedia.org/wiki/Multinomial_distribution)
+- Distribution catégorielle : [Wikipedia](https://en.wikipedia.org/wiki/Categorical_distribution)
+- Prior conjugué : [Wikipedia](https://en.wikipedia.org/wiki/Conjugate_prior)
+- Distribution de Dirichlet : [Wikipedia](https://en.wikipedia.org/wiki/Dirichlet_distribution)
+- Distribution Dirichlet-multinomiale : [Wikipedia](https://en.wikipedia.org/wiki/Dirichlet-multinomial_distribution)
 - Contraintes de Sudoku : [Règles du Sudoku](https://fr.wikipedia.org/wiki/Sudoku)
